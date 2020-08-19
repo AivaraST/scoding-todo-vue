@@ -49,7 +49,6 @@ export default {
       await axios
         .post("auth/login", credentials)
         .then(response => {
-          console.log(response);
           const token = response.data.token;
           const user = response.data.user;
 
@@ -70,7 +69,6 @@ export default {
     // Register
     async register({ commit }, credentials) {
       commit("setLoader", true);
-      console.log("reg", credentials);
       await axios
         .post("auth/register", credentials)
         .then(() => {
@@ -78,7 +76,6 @@ export default {
           router.push({ name: "Login", params: { registered: true } });
         })
         .catch(error => {
-          console.log(error.response.data.messages);
           commit("setErrors", {});
           commit("setErrors", error.response.data.messages);
         });
@@ -92,10 +89,8 @@ export default {
         return;
       }
 
-      axios.defaults.headers.common["Authorization"] = "Bearer" + state.token;
-
       await axios.get("auth/user").then(response => {
-        commit("setUser", response.data.user);
+        commit("setUser", response.data);
       });
     },
 
