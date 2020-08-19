@@ -23,6 +23,16 @@
             >Home</router-link
           >
         </li>
+        <li class="navigation__list-item">
+          <router-link :to="{ name: 'Login' }" class="navigation__link"
+            >Login</router-link
+          >
+        </li>
+        <li class="navigation__list-item">
+          <router-link :to="{ name: 'Register' }" class="navigation__link"
+            >Register</router-link
+          >
+        </li>
       </ul>
       <div class="navigation__close" @click="openedNav = !openedNav">
         <i class="fas fa-times navigation__close-icon"></i>
@@ -32,7 +42,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      openedNav: false
+    };
+  }
+};
 </script>
 
 <style lang="scss">

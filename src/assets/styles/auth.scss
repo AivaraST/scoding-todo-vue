@@ -1,0 +1,113 @@
+.content {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+  .form {
+    display: flex;
+    color: #fff;
+  
+    &__left {
+      background: linear-gradient(
+        200deg,
+        rgba(58, 173, 161, 1) 0%,
+        rgba(56, 183, 143, 1) 100%
+      );
+      width: 35%;
+      padding: 50px 25px;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    &__right {
+      background-color: #fff;
+      width: 65%;
+      color: #000;
+      padding: 50px 75px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      // display: flex;
+      // flex-direction: column;
+      // justify-content: center;
+    }
+  
+    &__title {
+      font-size: 36px;
+      text-align: center;
+      &--green {
+        color: #3bafa0;
+      }
+    }
+  
+    &__info {
+      font-size: 16px;
+      font-weight: 200;
+      padding: 30px 0;
+      text-align: center;
+    }
+
+    &__congrats {
+      font-size: 16px;
+      font-weight: 200;
+      padding-bottom: 30px;
+      text-align: center;
+      color: #3bafa0;
+    }
+  
+    &__button {
+      display: inline-block;
+      text-align: center;
+      outline: none;
+      text-transform: uppercase;
+      border-radius: 15px;
+      border: 1px solid #fff;
+      padding: 15px 15px;
+      align-self: center;
+      text-decoration: none;
+      color: #fff;
+  
+      &--transparent {
+        background-color: #ffffff00;
+      }
+  
+      &--green {
+        background-color: rgba(58, 173, 161, 1);
+      }
+    }
+  
+    &__input {
+      display: block;
+      background-color: #f4f8f7;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      width: 100%;
+      outline: none;
+    }
+  }
+  
+  @media (max-width: 767.98px) {
+    .content {
+      justify-content: center;
+      align-items: center;
+      padding: 15px 0;
+    }
+  
+    .form {
+      flex-direction: column;
+  
+      &__left {
+        width: 100%;
+        border-radius: 0;
+      }
+      &__right {
+        border-radius: 0;
+        width: 100%;
+        padding: 50px 25px;
+      }
+    }
+  }
