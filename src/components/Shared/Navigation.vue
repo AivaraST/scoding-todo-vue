@@ -17,7 +17,7 @@
       <div class="navigation__hamburger-line"></div>
     </div>
     <div class="navigation__block">
-      <ul class="navigation__list">
+      <ul class="navigation__list" v-if="!user">
         <li class="navigation__list-item">
           <router-link :to="{ name: 'Home' }" class="navigation__link"
             >Home</router-link
@@ -34,6 +34,23 @@
           >
         </li>
       </ul>
+      <ul class="navigation__list" v-else>
+        <li class="navigation__list-item">
+          <router-link :to="{ name: 'Home' }" class="navigation__link"
+            >Home</router-link
+          >
+        </li>
+        <li class="navigation__list-item">
+          <router-link :to="{ name: 'Dashboard' }" class="navigation__link"
+            >Dashboard</router-link
+          >
+        </li>
+        <li class="navigation__list-item" v-if="user.admin">
+          <router-link :to="{ name: 'AdminDashboard' }" class="navigation__link"
+            >Admin</router-link
+          >
+        </li>
+      </ul>
       <div class="navigation__close" @click="openedNav = !openedNav">
         <i class="fas fa-times navigation__close-icon"></i>
       </div>
@@ -42,11 +59,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       openedNav: false
     };
+  },
+  computed: {
+    ...mapGetters({
+      user: "auth/user"
+    })
   }
 };
 </script>
