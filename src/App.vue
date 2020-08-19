@@ -1,32 +1,65 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <Navigation></Navigation>
+    <router-view></router-view>
+    <Footer></Footer>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import Navigation from "@/components/Shared/Navigation.vue";
+import Footer from "@/components/Shared/Footer.vue";
+
+export default {
+  components: {
+    Navigation,
+    Footer
+  }
+};
+</script>
+>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#nav {
-  padding: 30px;
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+html,
+body {
+  height: 100%;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+body {
+  color: #000;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  background-color: #f0f4f3;
+}
+
+#app {
+  position: relative;
+  min-height: 100%;
+}
+
+.container {
+  max-width: 1140px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.wrapper {
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 </style>
