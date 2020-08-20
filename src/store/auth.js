@@ -49,7 +49,6 @@ export default {
   },
 
   actions: {
-    // Login
     async login({ commit }, credentials) {
       commit("setLoader", true);
 
@@ -75,7 +74,6 @@ export default {
       commit("setLoader", false);
     },
 
-    // Register
     async register({ commit }, credentials) {
       commit("setLoader", true);
       await axios
@@ -92,7 +90,6 @@ export default {
       commit("setLoader", false);
     },
 
-    // Attempt login when page loaded and token exists (user already was logged in)
     async attempt({ dispatch, commit, state }) {
       if (!state.token) {
         return;
@@ -110,7 +107,6 @@ export default {
         });
     },
 
-    // Logout user
     async logout({ commit }) {
       localStorage.removeItem("jwt_auth_token");
       localStorage.removeItem("jwt_auth_user");
