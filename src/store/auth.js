@@ -6,7 +6,8 @@ export default {
 
   state: {
     token: localStorage.getItem("jwt_auth_token") || null,
-    user: null,
+    user: JSON.parse(localStorage.getItem("jwt_auth_user")) || null,
+    authenticated: false,
     loader: false,
     errors: {}
   },
@@ -17,6 +18,9 @@ export default {
     },
     setUser(state, user) {
       state.user = user;
+    },
+    setAuthenticated(state, authenticated) {
+      state.authenticated = authenticated;
     },
     setLoader(state, status) {
       state.loader = status;
@@ -32,6 +36,9 @@ export default {
     },
     user(state) {
       return state.user;
+    },
+    authenticated(state) {
+      return state.authenticated;
     },
     loader(state) {
       return state.loader;
@@ -49,12 +56,14 @@ export default {
       await axios
         .post("auth/login", credentials)
         .then(response => {
-          const token = response.data.token;
+          const token = response.data.access_token;
           const user = response.data.user;
 
           localStorage.setItem("jwt_auth_token", token);
+          localStorage.setItem("jwt_auth_user", JSON.stringify(user));
           commit("setToken", token);
-          commit("setUser", user);
+          commit("setUser", response.data.user);
+          commit("setAuthenticated", true);
 
           router.push({ name: "Dashboard" });
         })
@@ -84,24 +93,35 @@ export default {
     },
 
     // Attempt login when page loaded and token exists (user already was logged in)
-    async attempt({ commit, state }) {
+    async attempt({ dispatch, commit, state }) {
       if (!state.token) {
         return;
       }
 
-      await axios.get("auth/user").then(response => {
-        commit("setUser", response.data);
-      });
+      await axios
+        .get("auth/user")
+        .then(response => {
+          localStorage.setItem("jwt_auth_user", JSON.stringify(response.data));
+          commit("setUser", response.data);
+          commit("setAuthenticated", true);
+        })
+        .catch(() => {
+          dispatch("logout");
+        });
     },
 
     // Logout user
     async logout({ commit }) {
+      localStorage.removeItem("jwt_auth_token");
+      localStorage.removeItem("jwt_auth_user");
+
       commit("setToken", null);
       commit("setUser", null);
-      localStorage.removeItem("jwt_auth_token");
+      commit("setAuthenticated", false);
+
       axios.defaults.headers.common["Authorization"] = "";
 
-      router.push({ name: "Home" });
+      router.push({ name: "Home" }).catch(() => {});
     }
   }
 };

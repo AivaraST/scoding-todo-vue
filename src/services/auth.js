@@ -7,7 +7,6 @@ const authUnauthorized = () => {
       const token = store.getters["auth/token"];
 
       config.headers.Authorization = token ? `Bearer${token}` : "";
-      console.log("Before request", config.headers.Authorization);
       return config;
     },
     error => {
@@ -22,8 +21,6 @@ const authUnauthorized = () => {
     error => {
       const statusCode = error.response.status;
 
-      console.log(statusCode);
-
       if (statusCode === 401) {
         store.dispatch("auth/logout");
       }
@@ -36,33 +33,30 @@ const authRouteMiddleware = router => {
   router.beforeEach((to, from, next) => {
     const requiredAuthorization = to.meta.requiredAuthorization;
 
-    if (!store.getters["auth/user"]) {
+    if (!store.getters["auth/authenticated"]) {
       store
         .dispatch("auth/attempt")
         .then(() => {
-          const user = store.getters["auth/user"];
+          const authenticated = store.getters["auth/authenticated"];
 
-          console.log(user);
-
-          if (requiredAuthorization === false && user) {
+          if (requiredAuthorization === false && authenticated) {
             return next({ name: "Home" });
           }
 
-          if (requiredAuthorization && !user) {
+          if (requiredAuthorization && !authenticated) {
             return next({ name: "Login" });
           }
 
           next();
         })
-        .catch({ name: "Home" });
+        .catch(next());
     } else {
+      if (requiredAuthorization === false) {
+        return next({ name: "Home" });
+      }
       next();
     }
   });
 };
-
-// const authInitial = () => {
-//   store.dispatch("auth/attempt");
-// };
 
 export { authUnauthorized, authRouteMiddleware };
