@@ -108,18 +108,17 @@ export default {
     },
 
     async logout({ commit }) {
-      localStorage.removeItem("jwt_auth_token");
-      localStorage.removeItem("jwt_auth_user");
-
-      commit("setToken", null);
-      commit("setUser", null);
+      router.push({ name: "Home" }).catch(() => {});
       commit("setAuthenticated", false);
 
-      axios.defaults.headers.common["Authorization"] = "";
-
-      router.push({ name: "Home" }).catch(() => {});
-
       await axios.post("auth/logout");
+
+      localStorage.removeItem("jwt_auth_token");
+      localStorage.removeItem("jwt_auth_user");
+      commit("setToken", null);
+      commit("setUser", null);
+
+      axios.defaults.headers.common["Authorization"] = "";
     }
   }
 };
