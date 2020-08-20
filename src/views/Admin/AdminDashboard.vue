@@ -59,6 +59,7 @@
                 :key="task.id"
                 :task="task"
                 @deleteTask="deleteTask"
+                @changeStatus="updateTaskStatus"
               ></TasksItemSide>
             </TasksSectionSide>
             <TasksSectionSide label="inprogress">
@@ -67,6 +68,7 @@
                 :key="task.id"
                 :task="task"
                 @deleteTask="deleteTask"
+                @changeStatus="updateTaskStatus"
               ></TasksItemSide>
             </TasksSectionSide>
             <TasksSectionSide label="done">
@@ -75,6 +77,7 @@
                 :key="task.id"
                 :task="task"
                 @deleteTask="deleteTask"
+                @changeStatus="updateTaskStatus"
               ></TasksItemSide>
             </TasksSectionSide>
           </TasksContainer>
@@ -120,7 +123,7 @@ export default {
     },
     async updateTaskStatus(id, status) {
       const index = this.tasks.findIndex(task => task.id == id);
-      this.tasks.splice(index, 1);
+      this.tasks[index].status = status;
       await axios.put(`admin/tasks/${id}`, { status });
     },
     async deleteTask(id) {
