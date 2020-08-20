@@ -4,7 +4,10 @@
       <div class="acp__block">
         <div class="acp__inner">
           <h1 class="acp__title">Users</h1>
-          <router-link :to="{ name: 'AdminUserAdd' }" class="acp__link">
+          <router-link
+            :to="{ name: 'AdminUserAdd' }"
+            class="acp__link acp__link--dark"
+          >
             Add
           </router-link>
 
@@ -195,6 +198,30 @@ export default {
   &__icon {
     color: #fff;
     font-size: 20px;
+  }
+
+  &__link {
+    display: inline-block;
+    width: auto;
+    text-align: center;
+    outline: none;
+    text-transform: uppercase;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    padding: 15px 15px;
+    text-decoration: none;
+    color: #fff;
+    transition: 0.3s background-color ease-in-out, 0.3s color ease-in-out;
+    cursor: pointer;
+    font-size: 12px;
+
+    &--dark {
+      background-color: #515661;
+
+      &:hover {
+        background-color: #353b48;
+      }
+    }
   }
 }
 

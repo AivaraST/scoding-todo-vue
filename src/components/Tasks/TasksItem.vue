@@ -34,7 +34,7 @@
             </button>
           </div>
         </div>
-        <div class="tasks__time">{{ task.date }}</div>
+        <div class="tasks__time">{{ task.created_at }}</div>
       </div>
     </div>
   </div>
