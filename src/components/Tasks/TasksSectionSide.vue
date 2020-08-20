@@ -32,16 +32,13 @@ export default {
   &__section {
     width: 100%;
     margin: 20px 0;
-    padding: 0 10px;
+    padding: 0 0;
     position: relative;
   }
   &__section-name {
     padding: 5px;
     display: inline-block;
     border-radius: 5px;
-    position: absolute;
-    left: 30px;
-    top: -15px;
     color: #f9fff9;
 
     &--assigned {
@@ -56,7 +53,7 @@ export default {
   }
   &__inner {
     min-height: 100px;
-    padding: 20px 10px;
+    padding: 10px 0;
     background-color: #fff;
   }
 }

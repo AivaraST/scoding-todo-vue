@@ -24,12 +24,12 @@
                   <div class="acp__manage">
                     <router-link
                       :to="{ name: 'AdminUserEdit', params: { id: user.id } }"
-                      class="acp__action acp__action--edit"
+                      class="acp__action"
                     >
                       <i class="fas fa-user-edit acp__icon"></i>
                     </router-link>
                     <button
-                      class="acp__action acp__action--delete"
+                      class="acp__action"
                       @click.prevent="deleteUser(user.id)"
                     >
                       <i class="fas fa-user-minus acp__icon"></i>
@@ -45,31 +45,37 @@
         <div class="acp__inner">
           <h1 class="acp__title">User tasks</h1>
           <!-- <FormButton color="dark">Add new task</FormButton> -->
-
+          <router-link
+            v-if="selectedId"
+            :to="{ name: 'AdminTaskAdd', params: { id: selectedId } }"
+            class="acp__link acp__link--dark"
+          >
+            Add task
+          </router-link>
           <TasksContainer v-if="tasks.length">
             <TasksSectionSide label="assigned">
-              <TasksItem
+              <TasksItemSide
                 v-for="task in tasksAssigned"
                 :key="task.id"
                 :task="task"
-                @changeStatus="updateTaskStatus"
-              ></TasksItem>
+                @deleteTask="deleteTask"
+              ></TasksItemSide>
             </TasksSectionSide>
             <TasksSectionSide label="inprogress">
-              <TasksItem
+              <TasksItemSide
                 v-for="task in tasksInprogress"
                 :key="task.id"
                 :task="task"
-                @changeStatus="updateTaskStatus"
-              ></TasksItem>
+                @deleteTask="deleteTask"
+              ></TasksItemSide>
             </TasksSectionSide>
             <TasksSectionSide label="done">
-              <TasksItem
+              <TasksItemSide
                 v-for="task in tasksDone"
                 :key="task.id"
                 :task="task"
-                @changeStatus="updateTaskStatus"
-              ></TasksItem>
+                @deleteTask="deleteTask"
+              ></TasksItemSide>
             </TasksSectionSide>
           </TasksContainer>
         </div>
@@ -82,18 +88,19 @@
 import axios from "axios";
 import TasksContainer from "@/components/Tasks/TasksContainer.vue";
 import TasksSectionSide from "@/components/Tasks/TasksSectionSide.vue";
-import TasksItem from "@/components/Tasks/TasksItem.vue";
+import TasksItemSide from "@/components/Tasks/TasksItemSide.vue";
 
 export default {
   components: {
     TasksContainer,
     TasksSectionSide,
-    TasksItem
+    TasksItemSide
   },
   data() {
     return {
       users: [],
-      tasks: []
+      tasks: [],
+      selectedId: null
     };
   },
   methods: {
@@ -104,6 +111,7 @@ export default {
     async fetchUserTasks(id) {
       const response = await axios.get(`admin/user/${id}/tasks`);
       this.tasks = response.data;
+      this.selectedId = id;
     },
     async deleteUser(id) {
       const index = this.users.findIndex(user => user.id == id);
@@ -114,6 +122,11 @@ export default {
       const index = this.tasks.findIndex(task => task.id == id);
       this.tasks.splice(index, 1);
       await axios.put(`admin/tasks/${id}`, { status });
+    },
+    async deleteTask(id) {
+      const index = this.tasks.findIndex(task => task.id == id);
+      this.tasks.splice(index, 1);
+      await axios.delete(`admin/tasks/${id}`, { status });
     }
   },
   computed: {
@@ -176,6 +189,7 @@ export default {
   }
 
   &__data {
+    font-size: 14px;
     max-width: 200px;
   }
   &__action {
@@ -185,19 +199,12 @@ export default {
     margin-left: 10px;
     border-radius: 5px;
     cursor: pointer;
-
-    &--edit {
-      background-color: #27ae60;
-    }
-
-    &--delete {
-      background-color: #e74c3c;
-    }
+    background-color: #fff;
   }
 
   &__icon {
-    color: #fff;
-    font-size: 20px;
+    color: #000;
+    font-size: 16px;
   }
 
   &__link {

@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .tasks {
   &__section {
     width: 33.33%;

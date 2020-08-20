@@ -9,6 +9,8 @@ import AdminPage from "../views/Admin/AdminPage.vue";
 import AdminDashboard from "../views/Admin/AdminDashboard.vue";
 import AdminUserAdd from "../views/Admin/AdminUserAdd.vue";
 import AdminUserEdit from "../views/Admin/AdminUserEdit.vue";
+import AdminTaskAdd from "../views/Admin/AdminTaskAdd.vue";
+import AdminTaskEdit from "../views/Admin/AdminTaskEdit.vue";
 
 Vue.use(VueRouter);
 
@@ -79,6 +81,22 @@ const routes = [
         path: "user/:id/edit",
         name: "AdminUserEdit",
         component: AdminUserEdit,
+        meta: {
+          requiredAuthorization: true
+        }
+      },
+      {
+        path: "user/:id/add",
+        name: "AdminTaskAdd",
+        component: AdminTaskAdd,
+        meta: {
+          requiredAuthorization: true
+        }
+      },
+      {
+        path: "task/:id/edit",
+        name: "AdminTaskEdit",
+        component: AdminTaskEdit,
         meta: {
           requiredAuthorization: true
         }
