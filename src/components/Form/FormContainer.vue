@@ -23,4 +23,11 @@ export default {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
+@media (max-width: 767.98px) {
+  .form {
+    border-radius: 0;
+    padding: 50px 25px;
+  }
+}
 </style>
