@@ -50,6 +50,11 @@
             >Admin</router-link
           >
         </li>
+        <li class="navigation__list-item" v-if="user.admin">
+          <router-link :to="{ name: 'Logout' }" class="navigation__link"
+            >Logout</router-link
+          >
+        </li>
       </ul>
       <div class="navigation__close" @click="openedNav = !openedNav">
         <i class="fas fa-times navigation__close-icon"></i>

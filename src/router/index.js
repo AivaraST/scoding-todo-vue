@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Auth/Login.vue";
 import Register from "../views/Auth/Register.vue";
+import Logout from "../views/Auth/Logout.vue";
 import Dashboard from "../views/Dashboard.vue";
 import AdminPage from "../views/Admin/AdminPage.vue";
 import AdminDashboard from "../views/Admin/AdminDashboard.vue";
@@ -32,6 +33,14 @@ const routes = [
     component: Register,
     meta: {
       requiredAuthorization: false
+    }
+  },
+  {
+    path: "/logout",
+    name: "Logout",
+    component: Logout,
+    meta: {
+      requiredAuthorization: true
     }
   },
   {

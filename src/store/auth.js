@@ -118,6 +118,8 @@ export default {
       axios.defaults.headers.common["Authorization"] = "";
 
       router.push({ name: "Home" }).catch(() => {});
+
+      await axios.post("auth/logout");
     }
   }
 };
