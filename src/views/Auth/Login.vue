@@ -22,17 +22,18 @@
         <FormInput
           name="email"
           type="email"
-          :error="getErrorMessage('email')"
+          :error="errors.email"
           v-model="credentials.email"
           >Email</FormInput
         >
         <FormInput
           name="password"
           type="password"
-          :error="getErrorMessage('password')"
+          :error="errors.password || errors.single"
           v-model="credentials.password"
           >Password</FormInput
         >
+
         <FormButton color="primary"
           >Login <i v-if="loader" class="fas fa-spinner fa-spin"></i
         ></FormButton>
@@ -85,13 +86,15 @@ export default {
         return;
       }
       this.login(this.credentials);
-    },
-    getErrorMessage(key) {
-      if (this.errors[key]) {
-        return this.errors[key][0];
-      }
-      return "";
     }
+    // getErrorMessage(key) {
+    //   if (this.errors[key]) {
+    //     if (this.errors[key].isArray()) {
+    //       return this.errors[key][0];
+    //     }
+    //   }
+    //   return "";
+    // }
   }
 };
 </script>

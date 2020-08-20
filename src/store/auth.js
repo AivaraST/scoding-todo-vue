@@ -67,8 +67,24 @@ export default {
           router.push({ name: "Dashboard" });
         })
         .catch(error => {
-          commit("setErrors", {});
-          commit("setErrors", error.response.data.messages);
+          const data = error.response.data;
+
+          if (data.error) {
+            commit("setErrors", {
+              single: data.error
+            });
+          } else {
+            const keys = Object.keys(data.messages);
+            const values = Object.values(data.messages);
+
+            let errorMessages = {};
+
+            for (let i = 0; i < keys.length; i++) {
+              errorMessages[keys[i]] = values[i][0];
+            }
+
+            commit("setErrors", errorMessages);
+          }
         });
 
       commit("setLoader", false);
