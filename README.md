@@ -9,4 +9,4 @@ Task Manager app with Vue and Laravel for practice purposes.
 - [ ] Refactor code.
 - [ ] Make more components, and reuse some at other places where we can reuse it.
 - [ ] Redirect back after user add / update, task add / update.
-- [ ] Find bug in admin actions when deleting user tasks and task not correctly deleting from array.
+- [ ] Fix route with auth/permisions redirect flickering.
