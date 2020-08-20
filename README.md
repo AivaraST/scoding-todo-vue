@@ -1,24 +1,12 @@
-# scoding-todo-vue
+## Task Manager
 
-## Project setup
-```
-npm install
-```
+Task Manager app with Vue and Laravel for practice purposes.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+- [BackEnd (Laravel)](https://github.com/AivaraST/scoding-todo-laravel).
+- [FrontEnd (Vue)](https://github.com/AivaraST/scoding-todo-vue).
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Todo Later
+- [ ] Refactor code.
+- [ ] Make more components, and reuse some at other places where we can reuse it.
+- [ ] Redirect back after user add / update, task add / update.
+- [ ] Find bug in admin actions when deleting user tasks and task not correctly deleting from array.
