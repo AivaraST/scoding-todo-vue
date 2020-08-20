@@ -120,6 +120,7 @@ export default {
         })
         .catch(() => {
           dispatch("logout");
+          throw "Auth failed";
         });
     },
 

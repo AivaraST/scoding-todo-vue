@@ -58,7 +58,8 @@ const routes = [
     name: "AdminPage",
     component: AdminPage,
     meta: {
-      requiredAuthorization: true
+      requiredAuthorization: true,
+      requiredRoles: "admin"
     },
     children: [
       {
@@ -66,7 +67,8 @@ const routes = [
         name: "AdminDashboard",
         component: AdminDashboard,
         meta: {
-          requiredAuthorization: true
+          requiredAuthorization: true,
+          requiredRoles: "admin"
         }
       },
       {
@@ -74,7 +76,8 @@ const routes = [
         name: "AdminUserAdd",
         component: AdminUserAdd,
         meta: {
-          requiredAuthorization: true
+          requiredAuthorization: true,
+          requiredRoles: "admin"
         }
       },
       {
@@ -82,7 +85,8 @@ const routes = [
         name: "AdminUserEdit",
         component: AdminUserEdit,
         meta: {
-          requiredAuthorization: true
+          requiredAuthorization: true,
+          requiredRoles: "admin"
         }
       },
       {
@@ -90,7 +94,8 @@ const routes = [
         name: "AdminTaskAdd",
         component: AdminTaskAdd,
         meta: {
-          requiredAuthorization: true
+          requiredAuthorization: true,
+          requiredRoles: "admin"
         }
       },
       {
@@ -98,7 +103,8 @@ const routes = [
         name: "AdminTaskEdit",
         component: AdminTaskEdit,
         meta: {
-          requiredAuthorization: true
+          requiredAuthorization: true,
+          requiredRoles: "admin"
         }
       }
     ]

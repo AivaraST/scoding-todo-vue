@@ -1,5 +1,6 @@
 import axios from "axios";
 import store from "@/store";
+import router from "../router";
 
 const AuthServices = {
   authUnauthorized() {
@@ -25,6 +26,11 @@ const AuthServices = {
         if (statusCode === 401) {
           store.dispatch("auth/logout");
         }
+
+        if (statusCode === 403) {
+          router.push({ name: "Home" });
+        }
+
         return Promise.reject(error);
       }
     );
@@ -33,30 +39,30 @@ const AuthServices = {
   authRouteMiddleware(router) {
     router.beforeEach((to, from, next) => {
       const requiredAuthorization = to.meta.requiredAuthorization;
+      const requiredRoles = to.meta.requiredRoles;
+      const authenticated = store.getters["auth/authenticated"];
 
-      if (!store.getters["auth/authenticated"]) {
+      if (!authenticated) {
         store
           .dispatch("auth/attempt")
           .then(() => {
-            const authenticated = store.getters["auth/authenticated"];
+            const admin = store.getters["auth/user"].admin;
 
-            if (requiredAuthorization === false && authenticated) {
+            if (requiredAuthorization === false) {
               return next({ name: "Home" });
             }
 
-            if (requiredAuthorization && !authenticated) {
+            if (requiredRoles && requiredRoles === "admin" && !admin) {
+              return next({ name: "Home" });
+            }
+          })
+          .catch(() => {
+            if (requiredAuthorization === true) {
               return next({ name: "Login" });
             }
-
-            next();
-          })
-          .catch(next());
-      } else {
-        if (requiredAuthorization === false) {
-          return next({ name: "Home" });
-        }
-        next();
+          });
       }
+      next();
     });
   }
 };

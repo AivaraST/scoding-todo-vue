@@ -50,7 +50,7 @@
             >Admin</router-link
           >
         </li>
-        <li class="navigation__list-item" v-if="user.admin">
+        <li class="navigation__list-item">
           <router-link :to="{ name: 'Logout' }" class="navigation__link"
             >Logout</router-link
           >
