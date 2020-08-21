@@ -11,7 +11,7 @@
         </FormLink>
       </div>
       <div class="form__right">
-        <h1 class="form__title form__title--green">Sign in to TODO</h1>
+        <h1 class="form__title form__title--green">Sign in to Task Manager</h1>
         <p class="form__info">
           Please enter your credentials to login to your account.
         </p>
