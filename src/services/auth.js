@@ -8,7 +8,7 @@ const AuthServices = {
       config => {
         const token = store.getters["auth/token"];
 
-        config.headers.Authorization = token ? `Bearer${token}` : "";
+        config.headers.Authorization = token ? `Bearer ${token}` : "";
         return config;
       },
       error => {
@@ -55,14 +55,19 @@ const AuthServices = {
             if (requiredRoles && requiredRoles === "admin" && !admin) {
               return next({ name: "Home" });
             }
+
+            next();
           })
           .catch(() => {
             if (requiredAuthorization === true) {
               return next({ name: "Login" });
             }
+
+            next();
           });
+      } else {
+        next();
       }
-      next();
     });
   }
 };
