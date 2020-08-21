@@ -50,8 +50,6 @@ export default {
 
   actions: {
     async login({ commit }, credentials) {
-      commit("setLoader", true);
-
       await axios
         .post("auth/login", credentials)
         .then(response => {
@@ -60,34 +58,17 @@ export default {
 
           localStorage.setItem("jwt_auth_token", token);
           localStorage.setItem("jwt_auth_user", JSON.stringify(user));
+
           commit("setToken", token);
-          commit("setUser", response.data.user);
+          commit("setUser", user);
           commit("setAuthenticated", true);
 
           router.push({ name: "Dashboard" });
         })
         .catch(error => {
           const data = error.response.data;
-
-          if (data.error) {
-            commit("setErrors", {
-              single: data.error
-            });
-          } else {
-            const keys = Object.keys(data.messages);
-            const values = Object.values(data.messages);
-
-            let errorMessages = {};
-
-            for (let i = 0; i < keys.length; i++) {
-              errorMessages[keys[i]] = values[i][0];
-            }
-
-            commit("setErrors", errorMessages);
-          }
+          throw new AuthException(data);
         });
-
-      commit("setLoader", false);
     },
 
     async register({ commit }, credentials) {
@@ -139,3 +120,18 @@ export default {
     }
   }
 };
+
+function AuthException(data) {
+  if (data.error) {
+    this.data = { single: data.error };
+  } else {
+    const keys = Object.keys(data.messages);
+    const values = Object.values(data.messages);
+    let errorMessages = {};
+
+    for (let i = 0; i < keys.length; i++) {
+      errorMessages[keys[i]] = values[i][0];
+    }
+    this.data = errorMessages;
+  }
+}

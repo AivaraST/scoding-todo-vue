@@ -46,55 +46,42 @@
 import FormInput from "@/components/Form/FormInput.vue";
 import FormButton from "@/components/Form/FormButton.vue";
 import FormLink from "@/components/Form/FormLink.vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import "@/assets/styles/auth.scss";
 
 export default {
   name: "login",
-  props: {
-    registered: {
-      type: Boolean,
-      required: false,
-      default: false
-    }
-  },
   components: {
     FormInput,
     FormButton,
     FormLink
+  },
+  props: {
+    registered: Boolean
   },
   data() {
     return {
       credentials: {
         email: "",
         password: ""
-      }
+      },
+      loader: false,
+      errors: {}
     };
-  },
-  computed: {
-    ...mapGetters({
-      loader: "auth/loader",
-      errors: "auth/errors"
-    })
   },
   methods: {
     ...mapActions({
       login: "auth/login"
     }),
-    submit() {
-      if (this.loader) {
-        return;
-      }
-      this.login(this.credentials);
+    async submit() {
+      if (this.loader) return console.log("FAILED");
+
+      this.loader = true;
+      await this.login(this.credentials).catch(error => {
+        this.errors = error.data;
+      });
+      this.loader = false;
     }
-    // getErrorMessage(key) {
-    //   if (this.errors[key]) {
-    //     if (this.errors[key].isArray()) {
-    //       return this.errors[key][0];
-    //     }
-    //   }
-    //   return "";
-    // }
   }
 };
 </script>
