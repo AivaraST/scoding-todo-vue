@@ -75,6 +75,11 @@ export default {
     ...mapGetters({
       user: "auth/user"
     })
+  },
+  watch: {
+    $route() {
+      this.openedNav = false;
+    }
   }
 };
 </script>
