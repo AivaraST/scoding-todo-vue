@@ -7,9 +7,7 @@ export default {
   state: {
     token: localStorage.getItem("jwt_auth_token") || null,
     user: JSON.parse(localStorage.getItem("jwt_auth_user")) || null,
-    authenticated: false,
-    loader: false,
-    errors: {}
+    authenticated: false
   },
 
   mutations: {
@@ -21,12 +19,6 @@ export default {
     },
     setAuthenticated(state, authenticated) {
       state.authenticated = authenticated;
-    },
-    setLoader(state, status) {
-      state.loader = status;
-    },
-    setErrors(state, errors) {
-      state.errors = errors;
     }
   },
 
@@ -39,12 +31,6 @@ export default {
     },
     authenticated(state) {
       return state.authenticated;
-    },
-    loader(state) {
-      return state.loader;
-    },
-    errors(state) {
-      return state.errors;
     }
   },
 
@@ -66,25 +52,19 @@ export default {
           router.push({ name: "Dashboard" });
         })
         .catch(error => {
-          const data = error.response.data;
-          throw new AuthException(data);
+          throw new AuthException(error.response.data);
         });
     },
 
-    async register({ commit }, credentials) {
-      commit("setLoader", true);
+    async register(_, credentials) {
       await axios
         .post("auth/register", credentials)
         .then(() => {
-          commit("setErrors", {});
           router.push({ name: "Login", params: { registered: true } });
         })
         .catch(error => {
-          commit("setErrors", {});
-          commit("setErrors", error.response.data.messages);
+          throw new AuthException(error.response.data);
         });
-
-      commit("setLoader", false);
     },
 
     async attempt({ dispatch, commit, state }) {

@@ -15,30 +15,27 @@
         <p class="form__info">
           Please enter your credentials to register new account.
         </p>
-        <FormInput
-          name="name"
-          :error="getErrorMessage('name')"
-          v-model="credentials.name"
+        <FormInput name="name" :error="errors.name" v-model="credentials.name"
           >Name</FormInput
         >
         <FormInput
           name="email"
           type="email"
-          :error="getErrorMessage('email')"
+          :error="errors.email"
           v-model="credentials.email"
           >Email</FormInput
         >
         <FormInput
           name="password"
           type="password"
-          :error="getErrorMessage('password')"
+          :error="errors.password"
           v-model="credentials.password"
           >Password</FormInput
         >
         <FormInput
           name="password_repeat"
           type="password"
-          :error="getErrorMessage('password_repeat')"
+          :error="errors.password_repeat"
           v-model="credentials.password_repeat"
           >Repeat password</FormInput
         >
@@ -54,7 +51,7 @@
 import FormInput from "@/components/Form/FormInput.vue";
 import FormButton from "@/components/Form/FormButton.vue";
 import FormLink from "@/components/Form/FormLink.vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import "@/assets/styles/auth.scss";
 
 export default {
@@ -71,30 +68,23 @@ export default {
         email: "",
         password: "",
         password_repeat: ""
-      }
+      },
+      loader: false,
+      errors: {}
     };
-  },
-  computed: {
-    ...mapGetters({
-      loader: "auth/loader",
-      errors: "auth/errors"
-    })
   },
   methods: {
     ...mapActions({
       register: "auth/register"
     }),
-    submit() {
-      if (this.loader) {
-        return;
-      }
-      this.register(this.credentials);
-    },
-    getErrorMessage(key) {
-      if (this.errors[key]) {
-        return this.errors[key][0];
-      }
-      return "";
+    async submit() {
+      if (this.loader) return;
+
+      this.loader = true;
+      await this.register(this.credentials).catch(error => {
+        this.errors = error.data;
+      });
+      this.loader = false;
     }
   }
 };
