@@ -24,7 +24,7 @@ const AuthServices = {
         const statusCode = error.response.status;
 
         if (statusCode === 401) {
-          store.dispatch("auth/logout");
+          store.dispatch("auth/logout", true);
         }
 
         if (statusCode === 403) {
@@ -50,13 +50,9 @@ const AuthServices = {
 
             if (requiredAuthorization === false) {
               return next({ name: "Home" });
-            }
-
-            if (requiredRoles && requiredRoles === "admin" && !admin) {
+            } else if (requiredRoles && requiredRoles === "admin" && !admin) {
               return next({ name: "Home" });
-            }
-
-            next();
+            } else next();
           })
           .catch(() => {
             if (requiredAuthorization === true) {

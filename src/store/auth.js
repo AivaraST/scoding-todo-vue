@@ -67,36 +67,30 @@ export default {
         });
     },
 
-    async attempt({ dispatch, commit, state }) {
+    async attempt({ commit, state }) {
       if (!state.token) {
         return;
       }
 
-      await axios
-        .get("auth/user")
-        .then(response => {
-          localStorage.setItem("jwt_auth_user", JSON.stringify(response.data));
-          commit("setUser", response.data);
-          commit("setAuthenticated", true);
-        })
-        .catch(() => {
-          dispatch("logout");
-          throw "Auth failed";
-        });
+      await axios.get("auth/user").then(response => {
+        localStorage.setItem("jwt_auth_user", JSON.stringify(response.data));
+        commit("setUser", response.data);
+        commit("setAuthenticated", true);
+      });
     },
 
-    async logout({ commit }) {
-      router.push({ name: "Home" }).catch(() => {});
-      commit("setAuthenticated", false);
-
-      await axios.post("auth/logout");
+    async logout({ commit }, expired) {
+      if (!expired) await axios.post("auth/logout");
 
       localStorage.removeItem("jwt_auth_token");
       localStorage.removeItem("jwt_auth_user");
+
       commit("setToken", null);
       commit("setUser", null);
+      commit("setAuthenticated", false);
 
       axios.defaults.headers.common["Authorization"] = "";
+      router.push({ name: "Home" }).catch(() => {});
     }
   }
 };
