@@ -71,8 +71,9 @@ export default {
       return "";
     },
     async addUser() {
+      this.loader = true;
       this.errors = {};
-      this.success = true;
+      this.success = false;
       await axios
         .post(`admin/user/${this.$route.params.id}/tasks`, this.task)
         .then(() => {

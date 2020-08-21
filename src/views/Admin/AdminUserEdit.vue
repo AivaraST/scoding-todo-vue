@@ -78,6 +78,7 @@ export default {
       });
     },
     async updateUser() {
+      this.loader = true;
       this.errors = {};
       this.success = false;
       await axios
@@ -86,9 +87,9 @@ export default {
           this.success = true;
         })
         .catch(error => {
-          console.log(error.response.data.messages);
           this.errors = error.response.data.messages;
         });
+      this.loader = false;
     }
   },
   mounted() {

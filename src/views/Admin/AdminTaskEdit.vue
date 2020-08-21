@@ -82,14 +82,13 @@ export default {
       });
     },
     async addUser() {
+      this.loader = true;
       this.errors = {};
-      this.true = false;
+      this.success = false;
       await axios
         .put(`admin/tasks/${this.$route.params.id}`, this.task)
         .then(() => {
           this.success = true;
-          this.task.name = "";
-          this.task.description = "";
         })
         .catch(error => {
           this.errors = error.response.data.messages;

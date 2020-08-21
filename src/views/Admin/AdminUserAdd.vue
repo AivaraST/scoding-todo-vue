@@ -85,6 +85,7 @@ export default {
       return "";
     },
     async addUser() {
+      this.loader = true;
       this.errors = {};
       this.success = false;
       await axios
