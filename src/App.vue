@@ -48,6 +48,7 @@ body {
 #app {
   position: relative;
   min-height: 100%;
+  padding-bottom: 50px;
 }
 
 .container {
@@ -59,7 +60,7 @@ body {
 }
 
 .wrapper {
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 </style>

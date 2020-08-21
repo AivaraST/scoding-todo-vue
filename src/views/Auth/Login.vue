@@ -74,7 +74,7 @@ export default {
       login: "auth/login"
     }),
     async submit() {
-      if (this.loader) return console.log("FAILED");
+      if (this.loader) return;
 
       this.loader = true;
       await this.login(this.credentials).catch(error => {
