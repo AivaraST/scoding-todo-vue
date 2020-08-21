@@ -33,9 +33,6 @@ export default {
     triggerModel() {
       this.$emit("click");
     }
-  },
-  mounted() {
-    console.log(this.to);
   }
 };
 </script>
